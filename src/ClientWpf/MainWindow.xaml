@@ -1,0 +1,79 @@
+<Window x:Class="ClientWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Клиент тестирования" Height="600" Width="900">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Connection -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="Хост:" VerticalAlignment="Center"/>
+            <TextBox Width="140" Text="127.0.0.1" Name="HostBox" Margin="6,0,12,0"/>
+            <TextBlock Text="Порт:" VerticalAlignment="Center"/>
+            <TextBox Width="80" Text="9000" Name="PortBox" Margin="6,0,12,0"/>
+            <Button Content="Подключиться" Click="Connect_Click" Width="120" Margin="0,0,8,0"/>
+            <Button Content="Отключиться" Click="Disconnect_Click" Width="120"/>
+        </StackPanel>
+
+        <!-- Login + tests -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="Логин:" VerticalAlignment="Center"/>
+            <TextBox Width="160" Name="LoginBox" Margin="6,0,12,0" Text="student"/>
+            <TextBlock Text="Пароль:" VerticalAlignment="Center"/>
+            <PasswordBox Width="160" Name="PasswordBox" Margin="6,0,12,0" Password="student"/>
+            <Button Content="Войти" Click="Login_Click" Width="90" Margin="0,0,8,0"/>
+            <Button Content="Список тестов" Click="GetTests_Click" Width="120" Margin="0,0,8,0"/>
+            <Button Content="Начать попытку" Click="StartAttempt_Click" Width="140" Margin="0,0,8,0"/>
+            <Button Content="Finish Attempt" Click="FinishAttempt_Click" Width="120"/>
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="260"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="320"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Tests -->
+            <GroupBox Header="Tests" Grid.Column="0" Margin="0,0,8,0">
+                <DockPanel>
+                    <ListBox Name="TestsList" DisplayMemberPath="Title" />
+                </DockPanel>
+            </GroupBox>
+
+            <!-- Question -->
+            <GroupBox Header="Question" Grid.Column="1" Margin="0,0,8,0">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Name="QuestionText" FontSize="16" TextWrapping="Wrap" />
+                    <Image Name="QuestionImage" Grid.Row="1" Height="180" Stretch="Uniform" Margin="0,8,0,8"/>
+
+                    <ScrollViewer Grid.Row="2">
+                        <StackPanel Name="OptionsPanel" />
+                    </ScrollViewer>
+
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+                        <Button Content="Prev" Click="Prev_Click" Width="80" Margin="0,0,8,0"/>
+                        <Button Content="Next" Click="Next_Click" Width="80" Margin="0,0,8,0"/>
+                        <Button Content="Submit Answers" Click="SubmitAnswers_Click" Width="120"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <!-- Log -->
+            <GroupBox Header="Log" Grid.Column="2">
+                <TextBox Name="LogBox" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>

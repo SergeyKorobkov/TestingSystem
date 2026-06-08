@@ -1,0 +1,110 @@
+<Window x:Class="EditorWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Редактор тестов" Height="650" Width="1000">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="Хост:" VerticalAlignment="Center"/>
+            <TextBox Width="140" Text="127.0.0.1" Name="HostBox" Margin="6,0,12,0"/>
+            <TextBlock Text="Порт:" VerticalAlignment="Center"/>
+            <TextBox Width="80" Text="9000" Name="PortBox" Margin="6,0,12,0"/>
+            <Button Content="Подключиться" Click="Connect_Click" Width="120" Margin="0,0,8,0"/>
+            <Button Content="Отключиться" Click="Disconnect_Click" Width="110" Margin="0,0,16,0"/>
+
+            <TextBlock Text="Логин:" VerticalAlignment="Center"/>
+            <TextBox Width="140" Name="LoginBox" Margin="6,0,12,0" Text="admin"/>
+            <TextBlock Text="Пароль:" VerticalAlignment="Center"/>
+            <PasswordBox Width="140" Name="PasswordBox" Margin="6,0,12,0" Password="admin"/>
+            <Button Content="Войти" Click="Login_Click" Width="90" Margin="0,0,8,0"/>
+            <Button Content="Обновить тесты" Click="GetTests_Click" Width="130"/>
+            <Button Content="Просмотр результатов" Click="OpenResults_Click" Width="170" Margin="8,0,0,0"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="260"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="320"/>
+            </Grid.ColumnDefinitions>
+
+            <TabControl Name="MainTabs" Grid.Column="0" Margin="0,0,8,0">
+                <TabItem Header="Тесты">
+                    <DockPanel Margin="8">
+                        <StackPanel DockPanel.Dock="Bottom" Margin="0,8,0,0">
+                            <TextBlock Text="Название теста" Margin="0,0,0,4"/>
+                            <TextBox Name="NewTestTitle" Margin="0,0,0,6"/>
+                            <TextBlock Text="Описание" Margin="0,0,0,4"/>
+                            <TextBox Name="NewTestDesc" Margin="0,0,0,6"/>
+                            <Button Content="Создать тест" Click="CreateTest_Click"/>
+                        </StackPanel>
+                        <ListBox Name="TestsList" DisplayMemberPath="Title" SelectionChanged="TestsList_SelectionChanged"/>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Результаты" x:Name="ResultsTab">
+                    <DockPanel Margin="8">
+                        <Button DockPanel.Dock="Top" Content="Обновить результаты" Click="GetResults_Click" Margin="0,0,0,8"/>
+                        <ListBox Name="ResultsList"/>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+
+            <GroupBox Header="Вопросы / Варианты" Grid.Column="1" Margin="0,0,8,0">
+                <Grid Margin="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                        <TextBlock Text="Новый вопрос:" VerticalAlignment="Center"/>
+                        <TextBox Name="NewQuestionText" Width="360" Margin="8,0,8,0"/>
+                        <TextBlock Text="Тип:" VerticalAlignment="Center"/>
+                        <ComboBox Name="QuestionKindBox" Width="110" Margin="8,0,8,0">
+                            <ComboBoxItem Content="single" IsSelected="True"/>
+                            <ComboBoxItem Content="multiple"/>
+                        </ComboBox>
+                        <TextBlock Text="Вес:" VerticalAlignment="Center"/>
+                        <TextBox Name="QuestionWeight" Width="40" Text="1" Margin="8,0,8,0"/>
+                        <Button Content="Картинка" Click="PickImage_Click" Margin="0,0,8,0"/>
+                        <Button Content="Создать вопрос" Click="CreateQuestion_Click"/>
+                    </StackPanel>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <GroupBox Header="Вопросы" Margin="0,0,8,0">
+                            <ListBox Name="QuestionsList" DisplayMemberPath="Text" SelectionChanged="QuestionsList_SelectionChanged"/>
+                        </GroupBox>
+
+                        <GroupBox Header="Варианты" Grid.Column="1">
+                            <DockPanel>
+                                <StackPanel DockPanel.Dock="Bottom" Margin="0,8,0,0">
+                                    <TextBox Name="NewOptionText" Margin="0,0,0,6"/>
+                                    <CheckBox Name="OptionIsCorrect" Content="Правильный" Margin="0,0,0,6"/>
+                                    <Button Content="Создать вариант" Click="CreateOption_Click"/>
+                                </StackPanel>
+                                <ListBox Name="OptionsList" DisplayMemberPath="Text"/>
+                            </DockPanel>
+                        </GroupBox>
+                    </Grid>
+
+                    <TextBlock Grid.Row="3" Name="PickedImageInfo" Foreground="Gray" Margin="0,8,0,0"/>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Лог" Grid.Column="2">
+                <TextBox Name="LogBox" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>
